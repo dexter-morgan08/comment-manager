@@ -7,6 +7,42 @@ const categoryColors = [
 
 const categoryInput = document.getElementById('categoryInput');
 const recommendations = document.getElementById('recommendations');
+const loading = document.getElementById('loading');
+
+// Wait for Firebase to initialize
+window.addEventListener('load', function() {
+    setTimeout(initializeApp, 500);
+});
+
+function initializeApp() {
+    if (typeof window.firebaseDB === 'undefined') {
+        alert('Firebase not configured! Please add your Firebase config to index.html');
+        loading.style.display = 'none';
+        return;
+    }
+    loadDataFromFirebase();
+}
+
+// Load data from Firebase
+function loadDataFromFirebase() {
+    const commentsRef = window.firebaseRef(window.firebaseDB, 'comments');
+    
+    window.firebaseOnValue(commentsRef, (snapshot) => {
+        if (snapshot.exists()) {
+            comments = snapshot.val();
+        } else {
+            comments = {};
+        }
+        loading.style.display = 'none';
+        renderComments();
+    });
+}
+
+// Save data to Firebase
+function saveDataToFirebase() {
+    const commentsRef = window.firebaseRef(window.firebaseDB, 'comments');
+    window.firebaseSet(commentsRef, comments);
+}
 
 categoryInput.addEventListener('input', showRecommendations);
 categoryInput.addEventListener('focus', showRecommendations);
@@ -93,6 +129,8 @@ function addComment() {
     comments[category].push(comment);
     document.getElementById('commentText').value = '';
     categoryInput.value = '';
+    
+    saveDataToFirebase();
     renderComments();
 }
 
@@ -207,6 +245,7 @@ function updateComment() {
         category: newCategory
     });
 
+    saveDataToFirebase();
     resetForm();
     renderComments();
 }
@@ -219,6 +258,7 @@ function deleteComment(id, category) {
             if (comments[category].length === 0) {
                 delete comments[category];
             }
+            saveDataToFirebase();
             renderComments();
         }
     }
@@ -227,6 +267,7 @@ function deleteComment(id, category) {
 function deleteCategory(category) {
     if (confirm(`Are you sure you want to delete the entire "${category}" category and all its comments?`)) {
         delete comments[category];
+        saveDataToFirebase();
         renderComments();
     }
 }
@@ -241,5 +282,3 @@ function resetForm() {
     addBtn.classList.remove('btn-success');
     addBtn.classList.add('btn-primary');
 }
-
-renderComments();
