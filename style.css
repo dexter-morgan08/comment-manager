@@ -245,6 +245,16 @@ textarea {
     font-size: 1.2em;
 }
 
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: white;
+    font-size: 1.2em;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
 @media (max-width: 768px) {
     .categories-section {
         grid-template-columns: 1fr;
