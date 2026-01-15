@@ -35,12 +35,44 @@
             <button class="btn btn-primary" onclick="addComment()">Add Comment</button>
         </div>
 
+        <div id="loading" class="loading">Loading your comments...</div>
+
         <div class="categories-section" id="categoriesContainer">
             <div class="no-categories">
                 Create your first comment to get started! 🚀
             </div>
         </div>
     </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, get, remove, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAUcSzhFDdI44S2QSAvJUMvelniVKJyGX0",
+            authDomain: "comment-manager-cb3a1.firebaseapp.com",
+            databaseURL: "https://comment-manager-cb3a1-default-rtdb.firebaseio.com",
+            projectId: "comment-manager-cb3a1",
+            storageBucket: "comment-manager-cb3a1.firebasestorage.app",
+            messagingSenderId: "891383432980",
+            appId: "1:891383432980:web:dee2cfbcf8b9c556336401"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Make Firebase available globally
+        window.firebaseDB = database;
+        window.firebaseRef = ref;
+        window.firebaseSet = set;
+        window.firebaseGet = get;
+        window.firebaseRemove = remove;
+        window.firebaseOnValue = onValue;
+    </script>
 
     <script src="script.js"></script>
 </body>
