@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Comments Manager</h1>
+            <p>Organize your thoughts by category</p>
+        </header>
+
+        <div class="input-section">
+            <div class="form-group">
+                <label for="commentText">Your Comment</label>
+                <textarea id="commentText" placeholder="Enter your comment here..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="categoryInput">Category</label>
+                <div class="category-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="categoryInput" 
+                        placeholder="Type a category name (e.g., Work, Personal, Ideas)"
+                        autocomplete="off"
+                    >
+                    <div class="recommendations" id="recommendations"></div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="addComment()">Add Comment</button>
+        </div>
+
+        <div class="categories-section" id="categoriesContainer">
+            <div class="no-categories">
+                Create your first comment to get started! 🚀
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
